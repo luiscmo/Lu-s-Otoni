@@ -1,0 +1,91 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <ctime>
+
+// Classe base Comida
+class Comida {
+protected:
+    std::string nome;
+    double precoPorUnidade;
+
+public:
+    Comida(const std::string& nome, double precoPorUnidade)
+        : nome(nome), precoPorUnidade(precoPorUnidade) {}
+
+    virtual ~Comida() {}
+
+    std::string getNome() const { return nome; }
+    double getPrecoPorUnidade() const { return precoPorUnidade; }
+};
+
+// Subclasse Pizza
+class Pizza : public Comida {
+private:
+    std::string tamanho;
+
+public:
+    Pizza(const std::string& nome, double precoPorUnidade, const std::string& tamanho)
+        : Comida(nome, precoPorUnidade), tamanho(tamanho) {}
+
+    std::string getTamanho() const { return tamanho; }
+};
+
+// Classe Pedido
+class Pedido {
+private:
+    std::string nomeCliente;
+    Comida* comida;
+    int quantidade;
+    double valorTotal;
+    std::string dataPedido;
+
+public:
+    Pedido(const std::string& nomeCliente, Comida* comida, int quantidade)
+        : nomeCliente(nomeCliente), comida(comida), quantidade(quantidade) {
+        calcularValorTotal();
+        setDataPedido();
+    }
+
+    ~Pedido() {}
+
+    void calcularValorTotal() {
+        valorTotal = quantidade * comida->getPrecoPorUnidade();
+    }
+
+    void setDataPedido() {
+        time_t agora = time(0);
+        tm* data = localtime(&agora);
+        char buffer[80];
+        strftime(buffer, 80, "%d/%m/%Y %H:%M:%S", data);
+        dataPedido = buffer;
+    }
+
+    void salvarPedidoEmArquivo() const {
+        std::ofstream arquivo("pedidos.txt", std::ios_base::app);
+        if (arquivo.is_open()) {
+            arquivo << "Nome do Cliente: " << nomeCliente << std::endl;
+            arquivo << "Comida: " << comida->getNome() << std::endl;
+            arquivo << "Quantidade: " << quantidade << std::endl;
+            arquivo << "Valor Total: R$ " << valorTotal << std::endl;
+            arquivo << "Data do Pedido: " << dataPedido << std::endl << std::endl;
+            arquivo.close();
+            std::cout << "Pedido salvo em pedidos.txt com sucesso.\n";
+        } else {
+            std::cerr << "Erro ao abrir o arquivo pedidos.txt\n";
+        }
+    }
+};
+
+int main() {
+   
+      Pizza pizza("Pizza de Calabresa", 30.0, "Grande");
+
+    // Criando um pedido
+    Pedido pedido("João", &pizza, 2);
+
+    pedido.salvarPedidoEmArquivo();
+
+    return 0;
+}
