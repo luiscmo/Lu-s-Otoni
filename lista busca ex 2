@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <algorithm> // Para std::sort
+
+using namespace std;
+
+int main() {
+    int tamanho;
+    cout << "Digite o tamanho do vetor: ";
+    cin >> tamanho;
+
+    // Criando um vetor de inteiros com o tamanho especificado
+    vector<int> vet(tamanho);
+
+    cout << "Digite os elementos do vetor:" << endl;
+    // Preenchendo o vetor com inteiros fornecidos pelo usuário
+    for (int i = 0; i < tamanho; ++i) {
+        cout << "Elemento " << i + 1 << ": ";
+        cin >> vet[i];
+    }
+
+    // Ordenando o vetor
+    sort(vet.begin(), vet.end());
+
+    // Imprimindo o vetor ordenado
+    cout << "Vetor ordenado:" << endl;
+    for (int i = 0; i < tamanho; ++i) {
+        cout << vet[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
