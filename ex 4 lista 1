@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Carro {
+string marca;
+string placa;
+string cor;
+};
+
+struct Dono {
+string nome;
+string telefone;
+Carro carro;
+};
+
+int main() {
+Dono dono;
+
+cout << "Cadastro de Dono" << endl;
+cout << "Nome: ";
+getline(cin, dono.nome);
+cout << "Telefone: ";
+getline(cin, dono.telefone);
+cout << "Marca do carro: ";
+getline(cin, dono.carro.marca);
+cout << "Placa do carro: ";
+getline(cin, dono.carro.placa);
+cout << "Cor do carro: ";
+getline(cin, dono.carro.cor);
+
+cout << "\nDados do carro cadastrado:" << endl;
+cout << "Nome: " << dono.nome << endl;
+cout << "Telefone: " << dono.telefone << endl;
+cout << "Marca do carro: " << dono.carro.marca << endl;
+cout << "Placa do carro: " << dono.carro.placa << endl;
+cout << "Cor do carro: " << dono.carro.cor << endl;
+
+return 0;
+}
