@@ -1,0 +1,78 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+
+class Veiculo {
+private:
+    double peso;
+    int ano;
+    std::string cor;
+    std::string marca;
+
+public:
+        Veiculo(double peso, int ano, const std::string& cor, const std::string& marca)
+        : peso(peso), ano(ano), cor(cor), marca(marca) {}
+
+   
+    double getPeso() const { return peso; }
+    int getAno() const { return ano; }
+    std::string getCor() const { return cor; }
+    std::string getMarca() const { return marca; }
+
+
+    void setPeso(double peso) { this->peso = peso; }
+    void setAno(int ano) { this->ano = ano; }
+    void setCor(const std::string& cor) { this->cor = cor; }
+    void setMarca(const std::string& marca) { this->marca = marca; }
+};
+
+class Concessionaria {
+private:
+    std::vector<Veiculo> veiculos;
+
+public:
+    
+    void adicionarVeiculo(const Veiculo& veiculo) {
+        veiculos.push_back(veiculo);
+    }
+
+   
+    void imprimirVeiculos() const {
+        std::cout << "Veículos cadastrados:\n";
+        for (const auto& veiculo : veiculos) {
+            std::cout << "Marca: " << veiculo.getMarca() << ", Ano: " << veiculo.getAno() << ", Cor: " << veiculo.getCor() << ", Peso: " << veiculo.getPeso() << std::endl;
+        }
+    }
+      void imprimirVeiculosEmArquivo(const std::string& nomeArquivo) const {
+        std::ofstream arquivo(nomeArquivo);
+        if (arquivo.is_open()) {
+            arquivo << "Veículos cadastrados:\n";
+            for (const auto& veiculo : veiculos) {
+                arquivo << "Marca: " << veiculo.getMarca() << ", Ano: " << veiculo.getAno() << ", Cor: " << veiculo.getCor() << ", Peso: " << veiculo.getPeso() << std::endl;
+            }
+            arquivo.close();
+            std::cout << "Arquivo " << nomeArquivo << " criado com sucesso.\n";
+        } else {
+            std::cerr << "Erro ao abrir o arquivo " << nomeArquivo << std::endl;
+        }
+    }
+};
+
+int main() {
+ 
+    Veiculo veiculo1(1500.5, 2022, "Preto", "Ford");
+    Veiculo veiculo2(1200.0, 2021, "Branco", "Toyota");
+
+    // Criando objeto da classe Concessionaria
+    Concessionaria concessionaria;
+    concessionaria.adicionarVeiculo(veiculo1);
+    concessionaria.adicionarVeiculo(veiculo2);
+
+    // Imprimindo os veículos cadastrados na tela
+    concessionaria.imprimirVeiculos();
+
+    concessionaria.imprimirVeiculosEmArquivo("veiculos.txt");
+
+    return 0;
+}
