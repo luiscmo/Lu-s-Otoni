@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Função para pesquisa com sentinela
+int pesqsent(const vector<int>& vet, int val) {
+    // Adicionando o valor de sentinela ao final do vetor
+    int tamanho = vet.size();
+    int ultimo = vet[tamanho - 1];
+    vet[tamanho - 1] = val;
+
+    int i = 0;
+    // Percorre o vetor até encontrar o valor procurado
+    while (vet[i] != val) {
+        i++;
+    }
+
+    // Restaurando o valor original no final do vetor
+    vet[tamanho - 1] = ultimo;
+
+    if (i < tamanho - 1 || vet[tamanho - 1] == val) {
+        return i; // Retorna a posição se o valor for encontrado
+    }
+
+    return -1; // Retorna -1 se o valor não for encontrado
+}
+
+int main() {
+    // Exemplo de uso da função
+    vector<int> vetor = {5, 10, 15, 20, 25};
+
+    int valorProcurado;
+    cout << "Digite o valor que deseja procurar: ";
+    cin >> valorProcurado;
+
+    int posicao = pesqsent(vetor, valorProcurado);
+
+    if (posicao != -1) {
+        cout << "O valor " << valorProcurado << " foi encontrado na posição " << posicao << " do vetor." << endl;
+    } else {
+        cout << "O valor " << valorProcurado << " não foi encontrado no vetor." << endl;
+    }
+
+    return 0;
+}
