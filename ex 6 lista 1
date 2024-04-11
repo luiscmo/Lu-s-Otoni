@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Pessoa {
+    string nome;
+    string telefone;
+    string tipoSanguineo;
+    int idade;
+};
+
+void imprimirPessoa(const Pessoa& pessoa) {
+    cout << "Nome: " << pessoa.nome << endl;
+    cout << "Telefone: " << pessoa.telefone << endl;
+    cout << "Tipo Sanguíneo: " << pessoa.tipoSanguineo << endl;
+    cout << "Idade: " << pessoa.idade << endl;
+    cout << "-----------------------------" << endl;
+}
+
+int main() {
+    vector<Pessoa> pessoas;
+
+    pessoas.push_back({"Joao", "123456789", "O-", 30});
+    pessoas.push_back({"Maria", "987654321", "AB+", 25});
+    pessoas.push_back({"Pedro", "111222333", "A+", 40});
+    pessoas.push_back({"Ana", "444555666", "O-", 35});
+    pessoas.push_back({"Carlos", "777888999", "O+", 50});
+
+    cout << "Doadores Universais:" << endl;
+    for (const auto& pessoa : pessoas) {
+        if (pessoa.tipoSanguineo == "O-") {
+            imprimirPessoa(pessoa);
+        }
+    }
+
+    return 0;
+}
