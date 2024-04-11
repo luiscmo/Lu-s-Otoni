@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Função para pesquisa sequencial
+int pesqseq(const vector<int>& vet, int val) {
+    for (int i = 0; i < vet.size(); ++i) {
+        if (vet[i] == val) {
+            return i; // Retorna a posição se o valor for encontrado
+        }
+    }
+    return -1; // Retorna -1 se o valor não for encontrado
+}
+
+int main() {
+    // Exemplo de uso da função
+    vector<int> vetor = {5, 10, 15, 20, 25};
+
+    int valorProcurado;
+    cout << "Digite o valor que deseja procurar: ";
+    cin >> valorProcurado;
+
+    int posicao = pesqseq(vetor, valorProcurado);
+
+    if (posicao != -1) {
+        cout << "O valor " << valorProcurado << " foi encontrado na posição " << posicao << " do vetor." << endl;
+    } else {
+        cout << "O valor " << valorProcurado << " não foi encontrado no vetor." << endl;
+    }
+
+    return 0;
+}
