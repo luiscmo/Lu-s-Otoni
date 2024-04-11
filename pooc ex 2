@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+
+class Pessoa {
+protected:
+    std::string nome;
+    int idade;
+
+public:
+    Pessoa(const std::string& nome, int idade)
+        : nome(nome), idade(idade) {}
+
+    virtual ~Pessoa() {}
+
+    std::string getNome() const { return nome; }
+    int getIdade() const { return idade; }
+};
+
+class Empregado : public Pessoa {
+protected:
+    double salarioBase;
+
+public:
+    Empregado(const std::string& nome, int idade, double salarioBase)
+        : Pessoa(nome, idade), salarioBase(salarioBase) {}
+
+    virtual ~Empregado() {}
+
+    virtual double calcularSalario() const {
+        return salarioBase;
+    }
+};
+
+class Vendedor : public Empregado {
+private:
+    double valorVendas;
+    double comissao;
+
+public:
+    Vendedor(const std::string& nome, int idade, double salarioBase, double valorVendas, double comissao)
+        : Empregado(nome, idade, salarioBase), valorVendas(valorVendas), comissao(comissao) {}
+
+    ~Vendedor() {}
+
+    double calcularSalario() const override {
+        return salarioBase + (valorVendas * comissao / 100.0);
+    }
+};
