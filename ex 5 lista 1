@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Calculadora {
+private:
+double raio;
+double lado;
+
+public:
+
+void definirDimensoesCirculo(double r) {
+    raio = r;
+}
+
+void definirDimensoesCubo(double l) {
+    lado = l;
+}
+
+void imprimirCalculos()
+{
+    double comprimentoCircunferencia = 2 * M_PI * raio;
+    double areaCircunferencia = M_PI * pow(raio, 2);
+
+    double areaLateralCubo = 4 * pow(lado, 2);
+    double areaTotalCubo = 6 * pow(lado, 2);
+    double volumeCubo = pow(lado, 3);
+
+    cout << "Cálculos do Círculo:" << endl;
+    cout << "Comprimento da Circunferência: " << comprimentoCircunferencia << endl;
+    cout << "Área da Circunferência: " << areaCircunferencia << endl << endl;
+
+    cout << "Cálculos do Cubo:" << endl;
+    cout << "Área Lateral do Cubo: " << areaLateralCubo << endl;
+    cout << "Área Total do Cubo: " << areaTotalCubo << endl;
+    cout << "Volume do Cubo: " << volumeCubo << endl;
+}
+};
+
+int main() {
+Calculadora calc;
+
+calc.definirDimensoesCirculo(5); 
+calc.definirDimensoesCubo(3);    
+
+calc.imprimirCalculos();
+
+return 0;
+}
