@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Função para pesquisa binária
+int pesqbin(const vector<int>& vet, int val) {
+    int inicio = 0;
+    int fim = vet.size() - 1;
+
+    while (inicio <= fim) {
+        int meio = inicio + (fim - inicio) / 2;
+
+        // Se o valor do meio for igual ao valor procurado, retorna a posição
+        if (vet[meio] == val) {
+            return meio;
+        }
+
+        // Se o valor do meio for maior que o valor procurado, busca na metade esquerda
+        if (vet[meio] > val) {
+            fim = meio - 1;
+        } else { // Caso contrário, busca na metade direita
+            inicio = meio + 1;
+        }
+    }
+
+    return -1; // Retorna -1 se o valor não for encontrado
+}
+
+int main() {
+    // Exemplo de uso da função
+    vector<int> vetor = {5, 10, 15, 20, 25};
+
+    int valorProcurado;
+    cout << "Digite o valor que deseja procurar: ";
+    cin >> valorProcurado;
+
+    int posicao = pesqbin(vetor, valorProcurado);
+
+    if (posicao != -1) {
+        cout << "O valor " << valorProcurado << " foi encontrado na posição " << posicao << " do vetor." << endl;
+    } else {
+        cout << "O valor " << valorProcurado << " não foi encontrado no vetor." << endl;
+    }
+
+    return 0;
+}
