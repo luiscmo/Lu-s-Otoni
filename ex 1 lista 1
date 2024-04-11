@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class AgendaTelefonica {
+private:
+string nome;
+string telefone;
+
+public:
+void definirContato(string novoNome, string novoTelefone) {
+nome = novoNome;
+telefone = novoTelefone;
+}
+
+void imprimirContato() {
+    cout << "Nome: " << nome << endl;
+    cout << "Telefone: " << telefone << endl;
+}
+};
+
+int main() {
+AgendaTelefonica contato;
+
+contato.definirContato("João", "(11) 1234-5678");
+
+cout << "Dados do contato:\n";
+contato.imprimirContato();
+
+return 0;
+}
