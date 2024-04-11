@@ -1,0 +1,73 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Complexo {
+private:
+double real;
+double imaginario;
+
+public:
+
+Complexo(double r, double i) : real(r), imaginario(i) {}
+
+
+Complexo operator+(const Complexo& c) const {
+    return Complexo(real + c.real, imaginario + c.imaginario);
+}
+
+
+Complexo operator-(const Complexo& c) const {
+    return Complexo(real - c.real, imaginario - c.imaginario);
+}
+
+
+Complexo operator*(const Complexo& c) const {
+    return Complexo(real * c.real - imaginario * c.imaginario,
+                    real * c.imaginario + imaginario * c.real);
+}
+
+Complexo operator/(const Complexo& c) const {
+    double divisor = c.real * c.real + c.imaginario * c.imaginario;
+    return Complexo((real * c.real + imaginario * c.imaginario) / divisor,
+                    (imaginario * c.real - real * c.imaginario) / divisor);
+}
+
+double modulo() const {
+    return sqrt(real * real + imaginario * imaginario);
+}
+
+
+Complexo conjugado() const {
+    return Complexo(real, -imaginario);
+}
+
+
+void imprimir() const {
+    cout << "(" << real << " + " << imaginario << "i)" << endl;
+}
+};
+
+int main() {
+
+Complexo num1(3, 4); // 3 + 4i
+Complexo num2(1, 2); // 1 + 2i
+
+Complexo soma = num1 + num2;
+Complexo subtracao = num1 - num2;
+Complexo multiplicacao = num1 * num2;
+Complexo divisao = num1 / num2;
+
+cout << "Soma: ";
+soma.imprimir();
+cout << "Subtração: ";
+subtracao.imprimir();
+cout << "Multiplicação: ";
+multiplicacao.imprimir();
+cout << "Divisão: ";
+divisao.imprimir();
+
+return 0;
+}
+
