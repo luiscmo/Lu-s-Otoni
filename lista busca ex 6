@@ -1,0 +1,97 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Função para pesquisa sequencial
+int pesqseq(const vector<int>& vet, int val) {
+    int pesquisas = 0;
+    for (int i = 0; i < vet.size(); ++i) {
+        pesquisas++;
+        if (vet[i] == val) {
+            return pesquisas; // Retorna o número de pesquisas feitas se o valor for encontrado
+        }
+    }
+    return pesquisas; // Retorna o número de pesquisas feitas se o valor não for encontrado
+}
+
+// Função para pesquisa binária
+int pesqbin(const vector<int>& vet, int val) {
+    int pesquisas = 0;
+    int inicio = 0;
+    int fim = vet.size() - 1;
+
+    while (inicio <= fim) {
+        pesquisas++;
+        int meio = inicio + (fim - inicio) / 2;
+
+        // Se o valor do meio for igual ao valor procurado, retorna o número de pesquisas feitas
+        if (vet[meio] == val) {
+            return pesquisas;
+        }
+
+        // Se o valor do meio for maior que o valor procurado, busca na metade esquerda
+        if (vet[meio] > val) {
+            fim = meio - 1;
+        } else { // Caso contrário, busca na metade direita
+            inicio = meio + 1;
+        }
+    }
+
+    return pesquisas; // Retorna o número de pesquisas feitas se o valor não for encontrado
+}
+
+// Função para pesquisa com sentinela
+int pesqsent(const vector<int>& vet, int val) {
+    int pesquisas = 0;
+
+    // Adicionando o valor de sentinela ao final do vetor
+    int tamanho = vet.size();
+    int ultimo = vet[tamanho - 1];
+    vet[tamanho - 1] = val;
+
+    int i = 0;
+    // Percorre o vetor até encontrar o valor procurado
+    while (vet[i] != val) {
+        pesquisas++;
+        i++;
+    }
+
+    // Restaurando o valor original no final do vetor
+    vet[tamanho - 1] = ultimo;
+
+    pesquisas++; // Conta a última comparação para verificar se o valor foi encontrado
+
+    return pesquisas; // Retorna o número de pesquisas feitas
+}
+
+int main() {
+    // Vetor de exemplo
+    vector<int> vetor = {5, 10, 15, 20, 25};
+
+    int valorProcurado;
+    cout << "Digite o valor que deseja procurar: ";
+    cin >> valorProcurado;
+
+    // Realizando as pesquisas e contando o número de pesquisas feitas
+    int pesqSeqCount = pesqseq(vetor, valorProcurado);
+    int pesqBinCount = pesqbin(vetor, valorProcurado);
+    int pesqSentCount = pesqsent(vetor, valorProcurado);
+
+    // Exibindo o número de pesquisas feitas em cada método
+    cout << "Número de pesquisas feitas:" << endl;
+    cout << "Pesquisa Sequencial: " << pesqSeqCount << " pesquisas" << endl;
+    cout << "Pesquisa Binária: " << pesqBinCount << " pesquisas" << endl;
+    cout << "Pesquisa com Sentinela: " << pesqSentCount << " pesquisas" << endl;
+
+    // Comparando os resultados
+    if (pesqSeqCount < pesqBinCount && pesqSeqCount < pesqSentCount) {
+        cout << "A pesquisa sequencial fez menos pesquisas." << endl;
+    } else if (pesqBinCount < pesqSeqCount && pesqBinCount < pesqSentCount) {
+        cout << "A pesquisa binária fez menos pesquisas." << endl;
+    } else {
+        cout << "A pesquisa com sentinela fez menos pesquisas." << endl;
+    }
+
+    return 0;
+}
