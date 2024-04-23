@@ -1,0 +1,81 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+struct pessoa {
+    int Matricula;
+    char Nome[30];
+    float Nota;
+};
+
+void merge(struct pessoa arr[], int l, int m, int r, int campo) {
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    struct pessoa L[n1], R[n2];
+
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    int i = 0;
+    int j = 0;
+    int k = l;
+
+    while (i < n1 && j < n2) {
+        if (campo == 1 ? L[i].Matricula >= R[j].Matricula : strcmp(L[i].Nome, R[j].Nome) >= 0)
+            arr[k++] = L[i++];
+        else
+            arr[k++] = R[j++];
+    }
+
+    while (i < n1)
+        arr[k++] = L[i++];
+    while (j < n2)
+        arr[k++] = R[j++];
+}
+
+void mergeSort(struct pessoa arr[], int l, int r, int campo) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m, campo);
+        mergeSort(arr, m + 1, r, campo);
+        merge(arr, l, m, r, campo);
+    }
+}
+
+void printArray(struct pessoa A[], int size) {
+    for (int i = 0; i < size; i++)
+        cout << "Matricula: " << A[i].Matricula << ", Nome: " << A[i].Nome << ", Nota: " << A[i].Nota << endl;
+}
+
+int main() {
+    int N;
+    cout << "Digite o número de pessoas: ";
+    cin >> N;
+
+    struct pessoa arr[N];
+
+    for (int i = 0; i < N; i++) {
+        cout << "Digite a matrícula da pessoa " << i + 1 << ": ";
+        cin >> arr[i].Matricula;
+        cout << "Digite o nome da pessoa " << i + 1 << ": ";
+        cin.ignore();
+        cin.getline(arr[i].Nome, 30);
+        cout << "Digite a nota da pessoa " << i + 1 << ": ";
+        cin >> arr[i].Nota;
+    }
+
+    int campo;
+    cout << "Escolha o campo para ordenar (1 - Matrícula, 2 - Nome): ";
+    cin >> campo;
+
+    mergeSort(arr, 0, N - 1, campo);
+
+    cout << "Array ordenado:\n";
+    printArray(arr, N);
+
+    return 0;
+}
