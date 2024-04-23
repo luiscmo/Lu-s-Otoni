@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+void trocar(char &a, char &b) {
+    char temp = a;
+    a = b;
+    b = temp;
+}
+
+int particionar(string &s, int inicio, int fim) {
+    char pivo = s[fim];
+    int i = inicio - 1;
+
+    for (int j = inicio; j <= fim - 1; j++) {
+        if (s[j] > pivo) {
+            i++;
+            trocar(s[i], s[j]);
+        }
+    }
+    trocar(s[i + 1], s[fim]);
+    return (i + 1);
+}
+
+void quickSort(string &s, int inicio, int fim) {
+    if (inicio < fim) {
+        int indice_pivo = particionar(s, inicio, fim);
+        quickSort(s, inicio, indice_pivo - 1);
+        quickSort(s, indice_pivo + 1, fim);
+    }
+}
+
+int main() {
+    string s;
+    cout << "Digite uma string: ";
+    cin >> s;
+
+    quickSort(s, 0, s.length() - 1);
+
+    cout << "String ordenada em ordem decrescente: " << s << endl;
+
+    return 0;
+}
